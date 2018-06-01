@@ -73,46 +73,50 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ input [ class "input", onInput (SetName model.input), placeholder "navn" ] []
-        , input [ class "input", onInput (SetCategory model.input), placeholder "kategori" ] []
-        , input [ class "input", onInput (SetPercent model.input), placeholder "prosent" ] []
-        , input [ class "input", onInput (SetBdt model.input), placeholder "bdt" ] []
-        , button [ class "button", onClick CreateAndShow ] [ text "Generer label" ]
-        , textarea [ class "output", cols 90, rows 70 ]
-            (List.map
-                (\label ->
-                    text
-                        (String.concat
-                            [ "\t"
-                            , "Navn: "
-                            , label.name
-                            , calculateSpaces (label.name)
-                            , "Navn: "
-                            , label.name
-                            , "\t\n\t"
-                            , "Kat.: "
-                            , label.category
-                            , calculateSpaces (label.category)
-                            , "Kat.: "
-                            , label.category
-                            , "\t\n\t"
-                            , "Bdt.: "
-                            , label.bdt
-                            , calculateSpaces (label.bdt)
-                            , "Bdt.: "
-                            , label.bdt
-                            , "\t\n\t"
-                            , "Vol.: "
-                            , label.percent
-                            , calculateSpaces (label.percent)
-                            , "Vol.: "
-                            , label.percent
-                            , "\t\n\n\n"
-                            ]
-                        )
+        [ div [ class "form" ]
+            [ input [ class "input", onInput (SetName model.input), placeholder "navn" ] []
+            , input [ class "input", onInput (SetCategory model.input), placeholder "kategori" ] []
+            , input [ class "input", onInput (SetPercent model.input), placeholder "prosent" ] []
+            , input [ class "input", onInput (SetBdt model.input), placeholder "bdt" ] []
+            , button [ class "button", onClick CreateAndShow ] [ text "Generer label" ]
+            ]
+        , div []
+            [ textarea [ class "output", cols 90, rows 70 ]
+                (List.map
+                    (\label ->
+                        text
+                            (String.concat
+                                [ "\t"
+                                , "Navn: "
+                                , label.name
+                                , calculateSpaces (label.name)
+                                , "Navn: "
+                                , label.name
+                                , "\t\n\t"
+                                , "Kat.: "
+                                , label.category
+                                , calculateSpaces (label.category)
+                                , "Kat.: "
+                                , label.category
+                                , "\t\n\t"
+                                , "Bdt.: "
+                                , label.bdt
+                                , calculateSpaces (label.bdt)
+                                , "Bdt.: "
+                                , label.bdt
+                                , "\t\n\t"
+                                , "Vol.: "
+                                , label.percent
+                                , calculateSpaces (label.percent)
+                                , "Vol.: "
+                                , label.percent
+                                , "\t\n\n\n"
+                                ]
+                            )
+                    )
+                    model.output
                 )
-                model.output
-            )
+            ]
         ]
 
 

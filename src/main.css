@@ -14,8 +14,25 @@ img {
   max-width: 200px;
 }
 
+.form {
+  float: left;
+  display: grid;
+}
+
 .input {
-  
+  margin: 20px;
+  font-family: Arial, Sans-Serif;
+    font-size: 18px;
+    color: #adadad;
+    padding: 10px;
+    border: solid 1px #adadad;
+    width: 230px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow:inset 0 0 5px 5px #E6E6E6;
+    -webkit-box-shadow:inset 0 0 5px 5px #E6E6E6;
+    box-shadow:inset 0 0 5px 5px #E6E6E6;
 }
 
 .output {
