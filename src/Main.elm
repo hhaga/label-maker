@@ -12,6 +12,7 @@ type alias Label =
     { name : String
     , percent : String
     , category : String
+    , bdt : String
     }
 
 
@@ -21,7 +22,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { input = { name = "", percent = "", category = "" }, output = [] }, Cmd.none )
+    ( { input = { name = "", percent = "", category = "", bdt = "" }, output = [] }, Cmd.none )
 
 
 
@@ -33,16 +34,17 @@ type Msg
     | SetName Label String
     | SetPercent Label String
     | SetCategory Label String
+    | SetBdt Label String
 
 
 genererOutput : Label -> List Label
 genererOutput input =
-    List.repeat 15 input
+    List.repeat 11 input
 
 
 calculateSpaces : String -> String
 calculateSpaces s =
-    String.repeat ((45 - (6 + String.length s)) // 2) " "
+    String.repeat (6 - (floor ((toFloat (6 + (String.length s)) / 8)))) "\t"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -60,6 +62,9 @@ update msg model =
         SetCategory current value ->
             ( { model | input = { current | category = value } }, Cmd.none )
 
+        SetBdt current value ->
+            ( { model | input = { current | bdt = value } }, Cmd.none )
+
 
 
 ---- VIEW ----
@@ -71,48 +76,38 @@ view model =
         [ input [ class "input", onInput (SetName model.input), placeholder "navn" ] []
         , input [ class "input", onInput (SetCategory model.input), placeholder "kategori" ] []
         , input [ class "input", onInput (SetPercent model.input), placeholder "prosent" ] []
+        , input [ class "input", onInput (SetBdt model.input), placeholder "bdt" ] []
         , button [ class "button", onClick CreateAndShow ] [ text "Generer label" ]
-        , textarea [ class "output", cols 90, rows 80 ]
+        , textarea [ class "output", cols 90, rows 70 ]
             (List.map
                 (\label ->
                     text
                         (String.concat
-                            [ calculateSpaces (label.name)
+                            [ "\t"
                             , "Navn: "
                             , label.name
                             , calculateSpaces (label.name)
-                            , calculateSpaces (label.name)
                             , "Navn: "
                             , label.name
-                            , calculateSpaces (label.name)
-                            , "\n"
-                            , calculateSpaces (label.category)
+                            , "\t\n\t"
                             , "Kat.: "
                             , label.category
                             , calculateSpaces (label.category)
-                            , calculateSpaces (label.category)
                             , "Kat.: "
                             , label.category
-                            , calculateSpaces (label.category)
-                            , "\n"
-                            , calculateSpaces (label.category)
+                            , "\t\n\t"
                             , "Bdt.: "
-                            , label.category
-                            , calculateSpaces (label.category)
-                            , calculateSpaces (label.category)
+                            , label.bdt
+                            , calculateSpaces (label.bdt)
                             , "Bdt.: "
-                            , label.category
-                            , calculateSpaces (label.category)
-                            , "\n"
-                            , calculateSpaces (label.percent)
+                            , label.bdt
+                            , "\t\n\t"
                             , "Vol.: "
                             , label.percent
                             , calculateSpaces (label.percent)
-                            , calculateSpaces (label.percent)
                             , "Vol.: "
                             , label.percent
-                            , calculateSpaces (label.percent)
-                            , "\n\n\n"
+                            , "\t\n\n\n"
                             ]
                         )
                 )
