@@ -12,7 +12,9 @@ type alias Label =
     { name : String
     , percent : String
     , category : String
-    , bdt : String
+    , batchnumber : String
+    , ibu : String
+    , brewdate : String
     }
 
 
@@ -22,7 +24,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { input = { name = "", percent = "", category = "", bdt = "" }, output = [] }, Cmd.none )
+    ( { input = { name = "", percent = "", category = "", batchnumber = "", ibu = "", brewdate = "" }, output = [] }, Cmd.none )
 
 
 
@@ -34,7 +36,9 @@ type Msg
     | SetName Label String
     | SetPercent Label String
     | SetCategory Label String
-    | SetBdt Label String
+    | SetBatchNumber Label String
+    | SetIbu Label String
+    | SetBrewdate Label String
 
 
 genererOutput : Label -> List Label
@@ -44,7 +48,7 @@ genererOutput input =
 
 calculateSpaces : String -> String
 calculateSpaces s =
-    String.repeat (6 - (floor ((toFloat (6 + (String.length s)) / 8)))) "\t"
+    String.repeat (5 - (floor ((toFloat (String.length s) / 8)))) "\t"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -62,8 +66,14 @@ update msg model =
         SetCategory current value ->
             ( { model | input = { current | category = value } }, Cmd.none )
 
-        SetBdt current value ->
-            ( { model | input = { current | bdt = value } }, Cmd.none )
+        SetBatchNumber current value ->
+            ( { model | input = { current | batchnumber = value } }, Cmd.none )
+
+        SetIbu current value ->
+            ( { model | input = { current | ibu = value } }, Cmd.none )
+
+        SetBrewdate current value ->
+            ( { model | input = { current | brewdate = value } }, Cmd.none )
 
 
 
@@ -76,8 +86,10 @@ view model =
         [ div [ class "form" ]
             [ input [ class "input", onInput (SetName model.input), placeholder "navn" ] []
             , input [ class "input", onInput (SetCategory model.input), placeholder "kategori" ] []
+            , input [ class "input", onInput (SetBatchNumber model.input), placeholder "batch" ] []
             , input [ class "input", onInput (SetPercent model.input), placeholder "prosent" ] []
-            , input [ class "input", onInput (SetBdt model.input), placeholder "bdt" ] []
+            , input [ class "input", onInput (SetIbu model.input), placeholder "ibu" ] []
+            , input [ class "input", onInput (SetBrewdate model.input), placeholder "bryggedato" ] []
             , button [ class "button", onClick CreateAndShow ] [ text "Generer label" ]
             ]
         , div []
@@ -87,30 +99,42 @@ view model =
                         text
                             (String.concat
                                 [ "\t"
-                                , "Navn: "
+                                , "Navn  : "
                                 , label.name
                                 , calculateSpaces (label.name)
-                                , "Navn: "
+                                , "Navn  : "
                                 , label.name
-                                , "\t\n\t"
-                                , "Kat.: "
+                                , "\n\t"
+                                , "Kat.  : "
                                 , label.category
                                 , calculateSpaces (label.category)
-                                , "Kat.: "
+                                , "Kat.  : "
                                 , label.category
-                                , "\t\n\t"
-                                , "Bdt.: "
-                                , label.bdt
-                                , calculateSpaces (label.bdt)
-                                , "Bdt.: "
-                                , label.bdt
-                                , "\t\n\t"
-                                , "Vol.: "
+                                , "\n\t"
+                                , "Dato  : "
+                                , label.brewdate
+                                , calculateSpaces (label.brewdate)
+                                , "Dato  : "
+                                , label.brewdate
+                                , "\n\t"
+                                , "Batch : "
+                                , label.batchnumber
+                                , calculateSpaces (label.batchnumber)
+                                , "Batch : "
+                                , label.batchnumber
+                                , "\n\t"
+                                , "Ibu   : "
+                                , label.ibu
+                                , calculateSpaces (label.ibu)
+                                , "Ibu   : "
+                                , label.ibu
+                                , "\n\t"
+                                , "Vol.  : "
                                 , label.percent
                                 , calculateSpaces (label.percent)
-                                , "Vol.: "
+                                , "Vol.  : "
                                 , label.percent
-                                , "\t\n\n\n"
+                                , "\n\n\n"
                                 ]
                             )
                     )
