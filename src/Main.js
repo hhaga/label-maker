@@ -8263,9 +8263,9 @@ var _elm_lang$html$Html_Events$Options = F2(
 var _user$project$Main$calculateSpaces = function (s) {
 	return A2(
 		_elm_lang$core$String$repeat,
-		6 - _elm_lang$core$Basics$floor(
+		5 - _elm_lang$core$Basics$floor(
 			_elm_lang$core$Basics$toFloat(
-				6 + _elm_lang$core$String$length(s)) / 8),
+				_elm_lang$core$String$length(s)) / 8),
 		'\t');
 };
 var _user$project$Main$genererOutput = function (input) {
@@ -8321,6 +8321,30 @@ var _user$project$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'SetBatchNumber':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							input: _elm_lang$core$Native_Utils.update(
+								_p0._0,
+								{batchnumber: _p0._1})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetIbu':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							input: _elm_lang$core$Native_Utils.update(
+								_p0._0,
+								{ibu: _p0._1})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
 				return {
 					ctor: '_Tuple2',
@@ -8329,7 +8353,7 @@ var _user$project$Main$update = F2(
 						{
 							input: _elm_lang$core$Native_Utils.update(
 								_p0._0,
-								{bdt: _p0._1})
+								{brewdate: _p0._1})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8338,22 +8362,30 @@ var _user$project$Main$update = F2(
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
 	_0: {
-		input: {name: '', percent: '', category: '', bdt: ''},
+		input: {name: '', percent: '', category: '', batchnumber: '', ibu: '', brewdate: ''},
 		output: {ctor: '[]'}
 	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
-var _user$project$Main$Label = F4(
-	function (a, b, c, d) {
-		return {name: a, percent: b, category: c, bdt: d};
+var _user$project$Main$Label = F6(
+	function (a, b, c, d, e, f) {
+		return {name: a, percent: b, category: c, batchnumber: d, ibu: e, brewdate: f};
 	});
 var _user$project$Main$Model = F2(
 	function (a, b) {
 		return {input: a, output: b};
 	});
-var _user$project$Main$SetBdt = F2(
+var _user$project$Main$SetBrewdate = F2(
 	function (a, b) {
-		return {ctor: 'SetBdt', _0: a, _1: b};
+		return {ctor: 'SetBrewdate', _0: a, _1: b};
+	});
+var _user$project$Main$SetIbu = F2(
+	function (a, b) {
+		return {ctor: 'SetIbu', _0: a, _1: b};
+	});
+var _user$project$Main$SetBatchNumber = F2(
+	function (a, b) {
+		return {ctor: 'SetBatchNumber', _0: a, _1: b};
 	});
 var _user$project$Main$SetCategory = F2(
 	function (a, b) {
@@ -8429,10 +8461,10 @@ var _user$project$Main$view = function (model) {
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Events$onInput(
-											_user$project$Main$SetPercent(model.input)),
+											_user$project$Main$SetBatchNumber(model.input)),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$placeholder('prosent'),
+											_0: _elm_lang$html$Html_Attributes$placeholder('batch'),
 											_1: {ctor: '[]'}
 										}
 									}
@@ -8448,10 +8480,10 @@ var _user$project$Main$view = function (model) {
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$html$Html_Events$onInput(
-												_user$project$Main$SetBdt(model.input)),
+												_user$project$Main$SetPercent(model.input)),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$placeholder('bdt'),
+												_0: _elm_lang$html$Html_Attributes$placeholder('prosent'),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -8460,22 +8492,62 @@ var _user$project$Main$view = function (model) {
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$button,
+										_elm_lang$html$Html$input,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('button'),
+											_0: _elm_lang$html$Html_Attributes$class('input'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$CreateAndShow),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Events$onInput(
+													_user$project$Main$SetIbu(model.input)),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$placeholder('ibu'),
+													_1: {ctor: '[]'}
+												}
 											}
 										},
-										{
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$input,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('input'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onInput(
+														_user$project$Main$SetBrewdate(model.input)),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$placeholder('bryggedato'),
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											{ctor: '[]'}),
+										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Generer label'),
+											_0: A2(
+												_elm_lang$html$Html$button,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('button'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$CreateAndShow),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Generer label'),
+													_1: {ctor: '[]'}
+												}),
 											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
+										}
+									}
 								}
 							}
 						}
@@ -8513,7 +8585,7 @@ var _user$project$Main$view = function (model) {
 												_0: '\t',
 												_1: {
 													ctor: '::',
-													_0: 'Navn: ',
+													_0: 'Navn  : ',
 													_1: {
 														ctor: '::',
 														_0: label.name,
@@ -8522,16 +8594,16 @@ var _user$project$Main$view = function (model) {
 															_0: _user$project$Main$calculateSpaces(label.name),
 															_1: {
 																ctor: '::',
-																_0: 'Navn: ',
+																_0: 'Navn  : ',
 																_1: {
 																	ctor: '::',
 																	_0: label.name,
 																	_1: {
 																		ctor: '::',
-																		_0: '\t\n\t',
+																		_0: '\n\t',
 																		_1: {
 																			ctor: '::',
-																			_0: 'Kat.: ',
+																			_0: 'Kat.  : ',
 																			_1: {
 																				ctor: '::',
 																				_0: label.category,
@@ -8540,50 +8612,98 @@ var _user$project$Main$view = function (model) {
 																					_0: _user$project$Main$calculateSpaces(label.category),
 																					_1: {
 																						ctor: '::',
-																						_0: 'Kat.: ',
+																						_0: 'Kat.  : ',
 																						_1: {
 																							ctor: '::',
 																							_0: label.category,
 																							_1: {
 																								ctor: '::',
-																								_0: '\t\n\t',
+																								_0: '\n\t',
 																								_1: {
 																									ctor: '::',
-																									_0: 'Bdt.: ',
+																									_0: 'Dato  : ',
 																									_1: {
 																										ctor: '::',
-																										_0: label.bdt,
+																										_0: label.brewdate,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Main$calculateSpaces(label.bdt),
+																											_0: _user$project$Main$calculateSpaces(label.brewdate),
 																											_1: {
 																												ctor: '::',
-																												_0: 'Bdt.: ',
+																												_0: 'Dato  : ',
 																												_1: {
 																													ctor: '::',
-																													_0: label.bdt,
+																													_0: label.brewdate,
 																													_1: {
 																														ctor: '::',
-																														_0: '\t\n\t',
+																														_0: '\n\t',
 																														_1: {
 																															ctor: '::',
-																															_0: 'Vol.: ',
+																															_0: 'Batch : ',
 																															_1: {
 																																ctor: '::',
-																																_0: label.percent,
+																																_0: label.batchnumber,
 																																_1: {
 																																	ctor: '::',
-																																	_0: _user$project$Main$calculateSpaces(label.percent),
+																																	_0: _user$project$Main$calculateSpaces(label.batchnumber),
 																																	_1: {
 																																		ctor: '::',
-																																		_0: 'Vol.: ',
+																																		_0: 'Batch : ',
 																																		_1: {
 																																			ctor: '::',
-																																			_0: label.percent,
+																																			_0: label.batchnumber,
 																																			_1: {
 																																				ctor: '::',
-																																				_0: '\t\n\n\n',
-																																				_1: {ctor: '[]'}
+																																				_0: '\n\t',
+																																				_1: {
+																																					ctor: '::',
+																																					_0: 'Ibu   : ',
+																																					_1: {
+																																						ctor: '::',
+																																						_0: label.ibu,
+																																						_1: {
+																																							ctor: '::',
+																																							_0: _user$project$Main$calculateSpaces(label.ibu),
+																																							_1: {
+																																								ctor: '::',
+																																								_0: 'Ibu   : ',
+																																								_1: {
+																																									ctor: '::',
+																																									_0: label.ibu,
+																																									_1: {
+																																										ctor: '::',
+																																										_0: '\n\t',
+																																										_1: {
+																																											ctor: '::',
+																																											_0: 'Vol.  : ',
+																																											_1: {
+																																												ctor: '::',
+																																												_0: label.percent,
+																																												_1: {
+																																													ctor: '::',
+																																													_0: _user$project$Main$calculateSpaces(label.percent),
+																																													_1: {
+																																														ctor: '::',
+																																														_0: 'Vol.  : ',
+																																														_1: {
+																																															ctor: '::',
+																																															_0: label.percent,
+																																															_1: {
+																																																ctor: '::',
+																																																_0: '\n\n\n',
+																																																_1: {ctor: '[]'}
+																																															}
+																																														}
+																																													}
+																																												}
+																																											}
+																																										}
+																																									}
+																																								}
+																																							}
+																																						}
+																																					}
+																																				}
 																																			}
 																																		}
 																																	}
